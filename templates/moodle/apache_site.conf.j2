@@ -1,0 +1,9 @@
+<VirtualHost *:80>
+DocumentRoot "{{moodle_app_wwwroot}}"
+ServerName {{moodle_app_domain}}
+<Directory "{{moodle_app_wwwroot}}">
+allow from all
+Require all granted
+Options +Indexes
+</Directory>
+</VirtualHost>

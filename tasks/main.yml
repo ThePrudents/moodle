@@ -1,0 +1,26 @@
+---
+# tasks file for pr.moodle
+
+
+- name: Moodle | Install mysql
+  include: "mysql.yml"
+  when: option_install_mysql == true
+
+- name: Moodle | Install APACHE
+  include: "apache.yml"
+  when: option_install_lamp == true
+
+- name: Moodle | Install LAMP stack - select php family
+  include: "php_apt_switchversion.yml"
+  when: option_install_lamp == true
+
+- name: Moodle | Install LAMP stack
+  include: "php_apache.yml"
+  when: option_install_lamp == true
+
+- name: Moodle | Install additional php extensions
+  include: "php_additional_extensions.yml"
+  when: option_install_lamp == true and php_extensions is defined
+
+- name: Moodle | Install moodle
+  include: "moodle.yml"

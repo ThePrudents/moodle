@@ -1,0 +1,76 @@
+- name: Moodle | Install necessary package dependencies
+  apt: pkg={{ item }} state=latest force=yes update_cache=yes
+  with_items: pkg_dependencies
+  sudo: yes
+
+- name: Moodle | install python-pip
+  apt: name=python-pip update_cache=yes state=latest
+  sudo: yes
+
+- name: Moodle | Update pip
+  shell: pip install -U pip
+  sudo: yes
+
+- name: Moodle | Install modules for mysql management
+  pip: name={{item}}
+  sudo: yes
+  with_items:
+    - MySQL-python
+
+- name: Moodle | Create moodle directory
+  file: dest="{{ moodle_app_root }}" state=directory owner="{{ moodle_user }}" group="www-data"
+  sudo: yes
+
+- name: Moodle | Create moodle data directory
+  file: dest="{{ moodle_app_datadir }}" state=directory owner="{{ moodle_user }}" group="www-data" mode="u=rwx,g=rwx,o=rx"
+  sudo: yes
+
+- name: Moodle | Create moodle src directory
+  file: dest="{{ moodle_app_wwwroot }}" state=directory owner="{{ moodle_user }}" group="www-data" mode="u=rwx,g=rx,o=rx"
+  sudo: yes
+
+- name: Moodle | Getting Moodle via Git
+  git: repo=git://git.moodle.org/moodle.git version="{{ moodle_version }}" dest="{{ moodle_app_wwwroot }}" accept_hostkey=yes depth=1
+  when: option_install_moodle == "git"
+
+- name: Moodle | Getting Moodle via Web
+  get_url: url="{{moodle_artifact_baseurl}}/{{moodle_archive_version}}" dest="{{moodle_app_root}}/{{moodle_archive_version}}"
+  when: option_install_moodle == "web"
+
+# - name: Moodle | Unachive downloaded source
+#   unarchive: src="{{moodle_app_root}}/{{moodle_archive_version}}" dest="{{moodle_app_wwwroot}}" copy=no creates="{{moodle_app_wwwroot}}/my"
+#   when: option_install_moodle == "web"
+
+- name: Moodle | Unachive downloaded source
+  shell: "tar -xvzf {{moodle_app_root}}/{{moodle_archive_version}} -C {{moodle_app_root}}"
+  args:
+    creates: "{{moodle_app_wwwroot}}/my"
+  when: option_install_moodle == "web"
+
+- name: Configure Moodle
+  template: src={{role_dir}}/templates/moodle/config.php.j2 dest="{{ moodle_app_wwwroot }}/config.php"
+
+- name: Moodle | Set up cron
+  cron: name="Moodle" job="/usr/bin/php {{ moodle_app_root }}/admin/cli/cron.php >/dev/null"
+
+- name: Moodle | Create Moodle database
+  mysql_db: name={{moodle_db_name}} state=present collation=utf8_unicode_ci login_user={{mysql_root_user}} login_password={{mysql_root_password}} login_host={{mysql_host}}
+
+- name: Moodle | Create Moodle db user
+  mysql_user: name={{moodle_db_user}} password={{moodle_db_pass}} priv={{moodle_db_name}}.*:ALL state=present login_user={{mysql_root_user}} login_password={{mysql_root_password}} login_host={{mysql_host}}
+
+- name: Moodle | create apache site configuration
+  template: src={{role_dir}}/templates/moodle/apache_site.conf.j2 dest=/etc/apache2/sites-available/moodle.conf
+  sudo: yes
+
+- name: Moodle | create apache site configuration
+  template: src={{role_dir}}/templates/moodle/apache_site.conf.j2 dest=/etc/apache2/sites-available/moodle.conf
+  sudo: yes
+
+- name:  Moodle | a2ensite moodle
+  command: a2ensite moodle
+  sudo: yes
+  args:
+    creates: /etc/apache2/sites-enabled/moodle.conf
+  notify:
+    - restart apache2

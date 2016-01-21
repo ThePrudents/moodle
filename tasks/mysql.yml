@@ -1,0 +1,42 @@
+---
+  # Parameters:
+  #  mysql_root_password
+
+  - name: MySQL | Check if is installed
+    command: test -x /usr/bin/mysql
+    register: mysql_present
+    ignore_errors: yes
+    tags: mysql
+
+  - name: MySQL | Preset root password
+    shell: echo mysql-server-5.5 mysql-server/{{item}} password {{mysql_root_password}} | debconf-set-selections
+    when: mysql_present|failed
+    with_items:
+      - root_password
+      - root_password_again
+    tags: mysql
+    sudo: yes
+
+  - name: MySQL | Install
+    apt: update-cache=yes force=yes state=present pkg=mysql-server
+    when: mysql_present|failed
+    tags: mysql
+    sudo: yes
+
+  - name: MySQL | Copy configuration file
+    template: src={{role_dir}}/templates/mysql/my.cnf.j2 dest=/etc/mysql/my.cnf backup=yes
+    register: mysql_conf
+    tags: mysql
+    sudo: yes
+
+  - name: MySQL | install libmysqlclient-dev
+    apt: name=libmysqlclient-dev update_cache=yes state=latest
+    when: mysql_present|failed
+    tags: mysql
+    sudo: yes
+
+  - name: MySQL | Restart
+    service: name=mysql state=restarted
+    when: mysql_conf.changed
+    tags: mysql
+    sudo: yes

@@ -1,0 +1,56 @@
+---
+# defaults file for pr.moodle
+
+  role_dir: "{{ lookup('pipe','pwd')|dirname }}"
+
+# unset if you have different recipe for mysql
+  option_install_mysql: true
+# unset if you have different recipe for lamp stack
+  option_install_lamp:  true
+# Currently git is easiest , also supported: web,
+  option_install_moodle: git
+
+  mysql_host: "127.0.0.1"
+  mysql_root_user: root
+  mysql_root_password: caspiwrocl
+
+  apache_mode: worker # use prefork or worker variables
+  apache2_disable_default: true
+
+  php_family: default # 5.4 | 5.5 | 5.6 | default
+
+# per https://docs.moodle.org/30/en/Step-by-step_Installation_Guide_for_Ubuntu
+  pkg_dependencies:
+    - git
+    - python-dev
+    - libmysqlclient-dev
+    - graphviz
+    - aspell
+    - clamav
+
+  php_extensions:
+    - php5-mysql
+    - php5-intl
+    - php5-xmlrpc
+    - php5-pspell
+    - php5-curl
+    - php5-gd
+    - php5-ldap
+
+  timezone: Europe/Amsterdam
+
+  moodle_db_name: 'moodle'
+  moodle_db_user: 'moodle'
+  moodle_db_pass: 'stestumesu'
+  moodle_app_domain: "moodle.dev"
+  moodle_app_root: "/opt/moodle"
+  moodle_app_wwwroot: "{{ moodle_app_root }}/moodle"
+  moodle_app_datadir: "{{moodle_app_root}}/moodledata"
+  # Check on site - at that moment 30 is recent stable
+  moodle_git_version: "MOODLE_30_STABLE"
+  moodle_artifact_baseurl: https://download.moodle.org/download.php/direct/stable30
+  moodle_archive_version: "moodle-latest-30.tgz"
+
+  moodle_user: "{{ansible_user_id}}"
+
+  moodle_admin_user: "6NHkm*S!^W4w"

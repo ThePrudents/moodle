@@ -1,0 +1,6 @@
+- name: LAMP | Install php extensions
+  apt: pkg={{ item }} state=latest force=yes update_cache=yes
+  with_items: php_extensions
+  sudo: yes
+  tags:
+    - php
