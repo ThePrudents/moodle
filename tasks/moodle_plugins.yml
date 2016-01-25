@@ -1,0 +1,17 @@
+---
+  - name: Moodle | Create directory for downloaded plugins
+    file: dest="{{ moodle_app_plugindir }}" state=directory owner="{{ moodle_user }}" group="www-data"
+    sudo: yes
+
+  - name: Moodle | Download plugins
+    get_url: url={{item.url}} dest={{moodle_app_plugindir}}/{{item.name}}.zip
+    with_items: moodle_plugins
+
+  - name: Moodle | Create directory for downloaded plugins
+    file: dest="{{moodle_app_wwwroot}}/{{item.dest}}" state=directory owner="{{ moodle_user }}" group="www-data"
+    with_items: moodle_plugins
+    sudo: yes
+
+  - name: Moodle | Unpack plugins
+    unarchive: src={{moodle_app_plugindir}}/{{item.name}}.zip dest={{moodle_app_wwwroot}}/{{item.dest}} copy=no
+    with_items: moodle_plugins

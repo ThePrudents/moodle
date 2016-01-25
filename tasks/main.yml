@@ -1,6 +1,24 @@
 ---
 # tasks file for pr.moodle
 
+- name: Moodle | needed tools
+  apt: update-cache=yes force=yes state=present pkg={{ item }}
+  sudo: yes
+  with_items: pkg_dependencies
+
+- name: Moodle | install python-pip
+  apt: name=python-pip update_cache=yes state=latest
+  sudo: yes
+
+- name: Moodle | Update pip
+  shell: pip install -U pip
+  sudo: yes
+
+- name: Moodle | Install modules for mysql management
+  pip: name={{item}}
+  sudo: yes
+  with_items:
+    - MySQL-python
 
 - name: Moodle | Install mysql
   include: "mysql.yml"
@@ -24,3 +42,7 @@
 
 - name: Moodle | Install moodle
   include: "moodle.yml"
+
+- name: Moodle | Install moodle plugins
+  include: "moodle_plugins.yml"
+  when: moodle_plugins is defined

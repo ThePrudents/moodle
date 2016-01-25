@@ -1,22 +1,3 @@
-- name: Moodle | Install necessary package dependencies
-  apt: pkg={{ item }} state=latest force=yes update_cache=yes
-  with_items: pkg_dependencies
-  sudo: yes
-
-- name: Moodle | install python-pip
-  apt: name=python-pip update_cache=yes state=latest
-  sudo: yes
-
-- name: Moodle | Update pip
-  shell: pip install -U pip
-  sudo: yes
-
-- name: Moodle | Install modules for mysql management
-  pip: name={{item}}
-  sudo: yes
-  with_items:
-    - MySQL-python
-
 - name: Moodle | Create moodle directory
   file: dest="{{ moodle_app_root }}" state=directory owner="{{ moodle_user }}" group="www-data"
   sudo: yes
@@ -30,7 +11,7 @@
   sudo: yes
 
 - name: Moodle | Getting Moodle via Git
-  git: repo=git://git.moodle.org/moodle.git version="{{ moodle_version }}" dest="{{ moodle_app_wwwroot }}" accept_hostkey=yes depth=1
+  git: repo=git://git.moodle.org/moodle.git version="{{ moodle_git_version }}" dest="{{ moodle_app_wwwroot }}" accept_hostkey=yes depth=1
   when: option_install_moodle == "git"
 
 - name: Moodle | Getting Moodle via Web
