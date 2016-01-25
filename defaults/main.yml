@@ -62,41 +62,41 @@
       name: auth_googleoauth2,
       desc: "Authentication: Google / Facebook / Github / Linkedin / DropBox / Windows / VK / Battle.net authentication",
       url: "https://moodle.org/plugins/download.php/9695/auth_googleoauth2_moodle30_2015110600.zip",
-      dest: auth/googleoauth2
+      dest: auth #/googleoauth2
       }
     - {
       name: mod_checklist,
       desc: "Activities: Checklist",
       url: "https://moodle.org/plugins/download.php/9703/mod_checklist_moodle30_2015110800.zip",
-      dest: mod/checklist
+      dest: mod #/checklist
       }
     - {
       name: block_xp,
       desc: "Blocks: Level up!",
       url: "https://moodle.org/plugins/download.php/9400/block_xp_moodle30_2015092800.zip",
-      dest: blocks/block_xp
+      dest: blocks #/block_xp
       }
     - {
       name: block_progress,
       desc: "Blocks: Progress Bar",
       url: "https://moodle.org/plugins/download.php/10263/block_progress_moodle30_2016011300.zip",
-      dest: blocks/block_progress
+      dest: blocks #/block_progress
       }
     - {
       name: theme_essential,
       desc: "Themes: Essential",
       url: "https://moodle.org/plugins/download.php/10342/theme_essential_moodle30_2016010201.zip",
-      dest: theme/theme_essential
+      dest: theme #/theme_essential
       }
     - {
       name: theme_academi,
       desc: "Themes: Academi",
       url: "https://moodle.org/plugins/download.php/10165/theme_academi_moodle30_2015122500.zip",
-      dest: theme/theme_academi
+      dest: theme #/theme_academi
       }
     - {
       name: theme_eguru,
       desc: "Themes: Eguru",
       url: "https://moodle.org/plugins/download.php/10321/theme_eguru_moodle30_2015122800.zip",
-      dest: theme/theme_eguru
+      dest: theme #/theme_eguru
       }
