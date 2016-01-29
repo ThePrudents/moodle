@@ -40,6 +40,8 @@
 
   timezone: Europe/Amsterdam
 
+  moodle_db_type: 'mysqli' #  'pgsql', 'mariadb', 'mysqli', 'mssql', 'sqlsrv' or 'oci'
+  moodle_db_host: '{{mysql_host}}'
   moodle_db_name: 'moodle'
   moodle_db_user: 'moodle'
   moodle_db_pass: 'stestumesu'
