@@ -9,6 +9,11 @@
   option_install_lamp:  true
 # Currently git is easiest , also supported: web,
   option_install_moodle: git
+# set to true if your image does not include multiverse sources
+  option_enable_multiverse: false
+# set to true, if your image comes with preconfigured ufw to allow incoming http/https
+  option_enable_ufw_http: false
+
 
   mysql_host: "127.0.0.1"
   mysql_root_user: root
