@@ -28,6 +28,7 @@
     - graphviz
     - aspell
     - clamav
+    - unzip
 
   php_extensions:
     - php5-mysql
