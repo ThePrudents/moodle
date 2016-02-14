@@ -209,7 +209,7 @@ BOX_ADDRESS=192.168.0.17
 BOX_USER=youruser
 BOX_PWD=yourpass
 
-prudentia ssh <<EOF
+prudentia ssh &lt;&lt;EOF
 unregister $BOX_NAME
 
 register
