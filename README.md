@@ -223,3 +223,121 @@ provision $BOX_NAME
 EOF
 </pre>
 
+
+## Running on BlueMix
+
+IBM Bluemix is a cloud platform as a service (PaaS) developed by IBM. It supports several programming languages and
+services as well as integrated DevOps to build, run, deploy and manage applications on the cloud. One of the services
+provided called Virtual Machines.
+
+Let's choose ubuntu 14.04.3 LTS image (available from official downloads )
+![Create new vm](https://raw.githubusercontent.com/Voronenko/devops-moodle-box/master/docs/0-bluemix-createvm.png "Create new vm")
+
+We need to allocate public ip address for our instance, and wait it to initialize.
+![Wait for init](https://raw.githubusercontent.com/Voronenko/devops-moodle-box/master/docs/1-bluemix-waitforinit.png "wait for init")
+
+We need to allocate public ip address for our instance, and wait it to initialize.
+![Don't forget to note ip address](https://raw.githubusercontent.com/Voronenko/devops-moodle-box/master/docs/2-bluemix-noteip.png "note ip address")
+
+It is time to execute provisioning. After executing provisioning, typically you will see successful log of the ansible provisioner.
+<pre>
+TASK: [pr-moodle | Configure Moodle] ******************************************
+changed: [bluemix.moodle.dev]
+
+TASK: [pr-moodle | Moodle | Set up cron] **************************************
+changed: [bluemix.moodle.dev]
+
+TASK: [pr-moodle | Moodle | Create Moodle database] ***************************
+changed: [bluemix.moodle.dev]
+
+TASK: [pr-moodle | Moodle | Create Moodle db user] ****************************
+changed: [bluemix.moodle.dev]
+
+TASK: [pr-moodle | Moodle | create apache site configuration] *****************
+changed: [bluemix.moodle.dev]
+
+TASK: [pr-moodle | Moodle | create apache site configuration] *****************
+ok: [bluemix.moodle.dev]
+
+TASK: [pr-moodle | Moodle | a2ensite moodle] **********************************
+changed: [bluemix.moodle.dev]
+
+TASK: [pr-moodle | Moodle | Create directory for downloaded plugins] **********
+changed: [bluemix.moodle.dev]
+
+TASK: [pr-moodle | Moodle | Download plugins] *********************************
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/9695/auth_googleoauth2_moodle30_2015110600.zip', 'dest': 'auth', 'name': 'auth_googleoauth2', 'desc': 'Authentication: Google / Facebook / Github / Linkedin / DropBox / Windows / VK / Battle.net authentication'})
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/9703/mod_checklist_moodle30_2015110800.zip', 'dest': 'mod', 'name': 'mod_checklist', 'desc': 'Activities: Checklist'})
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/9400/block_xp_moodle30_2015092800.zip', 'dest': 'blocks', 'name': 'block_xp', 'desc': 'Blocks: Level up!'})
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/10263/block_progress_moodle30_2016011300.zip', 'dest': 'blocks', 'name': 'block_progress', 'desc': 'Blocks: Progress Bar'})
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/10342/theme_essential_moodle30_2016010201.zip', 'dest': 'theme', 'name': 'theme_essential', 'desc': 'Themes: Essential'})
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/10165/theme_academi_moodle30_2015122500.zip', 'dest': 'theme', 'name': 'theme_academi', 'desc': 'Themes: Academi'})
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/10321/theme_eguru_moodle30_2015122800.zip', 'dest': 'theme', 'name': 'theme_eguru', 'desc': 'Themes: Eguru'})
+
+TASK: [pr-moodle | Moodle | Create directory for downloaded plugins] **********
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/9695/auth_googleoauth2_moodle30_2015110600.zip', 'dest': 'auth', 'name': 'auth_googleoauth2', 'desc': 'Authentication: Google / Facebook / Github / Linkedin / DropBox / Windows / VK / Battle.net authentication'})
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/9703/mod_checklist_moodle30_2015110800.zip', 'dest': 'mod', 'name': 'mod_checklist', 'desc': 'Activities: Checklist'})
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/9400/block_xp_moodle30_2015092800.zip', 'dest': 'blocks', 'name': 'block_xp', 'desc': 'Blocks: Level up!'})
+ok: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/10263/block_progress_moodle30_2016011300.zip', 'dest': 'blocks', 'name': 'block_progress', 'desc': 'Blocks: Progress Bar'})
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/10342/theme_essential_moodle30_2016010201.zip', 'dest': 'theme', 'name': 'theme_essential', 'desc': 'Themes: Essential'})
+ok: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/10165/theme_academi_moodle30_2015122500.zip', 'dest': 'theme', 'name': 'theme_academi', 'desc': 'Themes: Academi'})
+ok: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/10321/theme_eguru_moodle30_2015122800.zip', 'dest': 'theme', 'name': 'theme_eguru', 'desc': 'Themes: Eguru'})
+
+TASK: [pr-moodle | Moodle | Unpack plugins] ***********************************
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/9695/auth_googleoauth2_moodle30_2015110600.zip', 'dest': 'auth', 'name': 'auth_googleoauth2', 'desc': 'Authentication: Google / Facebook / Github / Linkedin / DropBox / Windows / VK / Battle.net authentication'})
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/9703/mod_checklist_moodle30_2015110800.zip', 'dest': 'mod', 'name': 'mod_checklist', 'desc': 'Activities: Checklist'})
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/9400/block_xp_moodle30_2015092800.zip', 'dest': 'blocks', 'name': 'block_xp', 'desc': 'Blocks: Level up!'})
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/10263/block_progress_moodle30_2016011300.zip', 'dest': 'blocks', 'name': 'block_progress', 'desc': 'Blocks: Progress Bar'})
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/10342/theme_essential_moodle30_2016010201.zip', 'dest': 'theme', 'name': 'theme_essential', 'desc': 'Themes: Essential'})
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/10165/theme_academi_moodle30_2015122500.zip', 'dest': 'theme', 'name': 'theme_academi', 'desc': 'Themes: Academi'})
+changed: [bluemix.moodle.dev] => (item={'url': 'https://moodle.org/plugins/download.php/10321/theme_eguru_moodle30_2015122800.zip', 'dest': 'theme', 'name': 'theme_eguru', 'desc': 'Themes: Eguru'})
+
+TASK: [pr-moodle | UFW | Allow incoming http & https] *************************
+skipping: [bluemix.moodle.dev] => (item=http)
+skipping: [bluemix.moodle.dev] => (item=https)
+
+TASK: [Common setup | Preventing ucf to ask information] **********************
+skipping: [bluemix.moodle.dev]
+
+TASK: [Common setup | Message of the day explaining server is under Prudentia control] ***
+changed: [bluemix.moodle.dev]
+
+TASK: [Common setup | Install common apt packages] ****************************
+changed: [bluemix.moodle.dev] => (item=build-essential,reptyr,htop,curl,python-software-properties,python-httplib2)
+
+NOTIFIED: [pr-moodle | restart apache2] ***************************************
+changed: [bluemix.moodle.dev]
+
+PLAY RECAP ********************************************************************
+bluemix.moodle.dev         : ok=60   changed=52   unreachable=0    failed=0
+
+Play run took 3 minutes
+</pre>
+
+As you see, less in 5 minutes we have our moodle ready for configuration.
+
+Upon navigation to site we will see initial moodle start screen
+
+We need to allocate public ip address for our instance, and wait it to initialize.
+![Initial screen](https://raw.githubusercontent.com/Voronenko/devops-moodle-box/master/docs/3-bluemix-firstrun.png "Initial screen")
+
+As we see - box is configured correctly.
+![Box configured correctly](https://raw.githubusercontent.com/Voronenko/devops-moodle-box/master/docs/4-bluemix-requirements.png "Box configured correctly")
+
+Initial setup goes smoothly
+![Box configured correctly](https://raw.githubusercontent.com/Voronenko/devops-moodle-box/master/docs/5-initial-setup.png "Box configured correctly")
+
+
+As we see all custom plugins and themes are in place, for example "Blocks: Level up!":
+![Blocks: Level up! is present](https://raw.githubusercontent.com/Voronenko/devops-moodle-box/master/docs/6-customplugins-present.png "Blocks: Level up! is present")
+
+## What can be improved.
+
+ideally, recipe can be extended to be fully non-interactive. Moodle seems to allow such setup in the future (looking at install.php)
+Unfortunately, at present moment documentation does not provide clean way how to do it, unless you script configuration & DB of the existing moodle.
+
+Readers are welcome to advise on options.
+
+
+
+
