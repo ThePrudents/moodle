@@ -236,7 +236,7 @@ Let's choose ubuntu 14.04.3 LTS image (available from official downloads )
 We need to allocate public ip address for our instance, and wait it to initialize.
 ![Wait for init](https://raw.githubusercontent.com/Voronenko/devops-moodle-box/master/docs/1-bluemix-waitforinit.png "wait for init")
 
-We need to allocate public ip address for our instance, and wait it to initialize.
+Don't forget to configure DNS once you get public ip address from Bluemix platform
 ![Don't forget to note ip address](https://raw.githubusercontent.com/Voronenko/devops-moodle-box/master/docs/2-bluemix-noteip.png "note ip address")
 
 It is time to execute provisioning. After executing provisioning, typically you will see successful log of the ansible provisioner.
@@ -318,7 +318,6 @@ As you see, less in 5 minutes we have our moodle ready for configuration.
 
 Upon navigation to site we will see initial moodle start screen
 
-We need to allocate public ip address for our instance, and wait it to initialize.
 ![Initial screen](https://raw.githubusercontent.com/Voronenko/devops-moodle-box/master/docs/3-bluemix-firstrun.png "Initial screen")
 
 As we see - box is configured correctly.
