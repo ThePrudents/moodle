@@ -1,6 +1,7 @@
-
-
 # Moodle installation on Ubuntu 14.04 in BlueMix cloud environment with ansible
+
+[![Build Status](https://travis-ci.org/ThePrudents/moodle.svg?branch=master)](https://travis-ci.org/ThePrudents/moodle)
+
 
 ## Introduction
 
