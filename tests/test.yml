@@ -1,4 +1,8 @@
 ---
 - hosts: all
   roles:
-    - role_under_test
+    - {
+        role: "role_under_test",
+        prudentia_dir: "/usr/local/lib/python2.7/dist-packages/prudentia"
+      }
+
