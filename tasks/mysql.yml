@@ -40,3 +40,10 @@
     when: mysql_conf.changed
     tags: mysql
     sudo: yes
+
+  - name: MySQL | Check started
+    service: name=mysql state=restarted
+    when: mysql_conf.changed
+    tags: mysql
+    sudo: yes
+
