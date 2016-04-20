@@ -331,7 +331,7 @@ Initial setup goes smoothly
 As we see all custom plugins and themes are in place, for example "Blocks: Level up!":
 ![Blocks: Level up! is present](https://raw.githubusercontent.com/Voronenko/devops-moodle-box/master/docs/6-customplugins-present.png "Blocks: Level up! is present")
 
-## What can be improved.
+## What can be improved
 
 ideally, recipe can be extended to be fully non-interactive. Moodle seems to allow such setup in the future (looking at install.php)
 Unfortunately, at present moment documentation does not provide clean way how to do it, unless you script configuration & DB of the existing moodle.
